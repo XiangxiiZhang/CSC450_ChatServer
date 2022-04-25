@@ -7,15 +7,12 @@ public class chatClient
     {
         Socket s = new Socket('localhost', 2222);
         Scanner clientInput = new Scanner(client.getInputStream());
-        string question = clientInput.nextLine();
+        String question = clientInput.nextLine();
         System.out.println(question);
         Scanner localInput = new Scanner(system.in);
         PrintStream clientOutput = new PrintStream(client.getOutputStream());
-        String myString = new String("Woot")
-
 
         Thread lt = new Thread() { System.out.println("woot");};
-            public void madeUpMethod(){};
             public void run()
             {
                 String line;
@@ -27,10 +24,18 @@ public class chatClient
             }
         };
         lt.start();
+        String line;
         while(true)
         {
-            clientOutput. println(localInput.nextLine());
+            line = localInput.nextLine();
+            clientOutput.println(line);
+            if(line.equals("/quit"))
+            {
+                break;
+            }
+
         }
-    
+        System.out.println("Goodbye");
+        System.exit(0);
     }
 }
