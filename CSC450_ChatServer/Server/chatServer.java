@@ -1,19 +1,21 @@
 import java.io.PrintStream;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Scanner;
-
+import java.util.Random;
 public class chatServer
 {
     public static void main(String[] args) throws Exception
     {
         ServerSocket s = new ServerSocket(2222);
-        System.out.println("Listenning for Connection...");
-        Socket client = s.accept(); //blocks
-        System.out.println("Connection Established...");
-        PrintStream clientOutput = new PrintStream(client.getOutputStream());
-        Scanner clientInput = new Scanner(client.getInputStream());
-        clientOutput.println("What is your name?");
-        String name = clientInput.nextLine();
-        System.out.println("read: " + name);
+        ArrayList<ChatWorkerThread> theThreads = new ArrayList<ChatWorkerThread>();
+        while(true)
+        {
+            System.out.println("Listenning for Connection...");
+            Socket client = s.accept(); //blocks
+            ChatWorkerThread t = new ChatWorkerThread(client);
+            theThreads.add(t);
+            t.start();
+        }
     }
 }
